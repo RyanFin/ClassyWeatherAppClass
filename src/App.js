@@ -44,7 +44,22 @@ class App extends React.Component {
 
     // giving this method explicit access to the current component instance
     this.fetchWeather = this.fetchWeather.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
+
+  handleChange = (e) => {
+    console.log("exp");
+    console.log(e.target);
+    // set location
+    this.setState({ location: e.target.value });
+  };
+
+  // wait for enter keypress
+  handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      this.fetchWeather();
+    }
+  };
 
   async fetchWeather() {
     try {
@@ -89,7 +104,8 @@ class App extends React.Component {
             type="text"
             placeholder="Search from Location"
             value={this.state.location}
-            onChange={(e) => this.setState({ location: e.target.value })}
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyPress}
           />
         </div>
         <button onClick={this.fetchWeather}>Get Weather</button>
